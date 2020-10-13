@@ -1,0 +1,24 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">{{ title }}</h1>
+
+        {{ form_start(delete_form) }}
+
+        {{ form_row(delete_form.confirmation, {
+            label: label
+        }) }}
+
+        <button type="submit" class="button is-danger is-fullwidth">
+            Supprimer
+        </button>
+
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}
+

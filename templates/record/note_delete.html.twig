@@ -1,0 +1,33 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Supprimer une note
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">
+            Supprimer une note
+        </h1>
+
+        <article class="message is-danger">
+            <div class="message-header">
+                <p>Confirmation de suppression</p>
+            </div>
+            <div class="message-body">
+                {{ form_start(delete_form) }}
+
+                {{ form_row(delete_form.confirmation, {
+                    label: 'Je confirme la suppression définitive de la note sur l\'album "' ~ note.record.title ~ '" postée le ' ~ note.createdAt|date('d/m/Y')
+                }) }}
+
+                <button type="submit" class="button is-danger is-fullwidth">
+                    Supprimer
+                </button>
+
+                {{ form_end(delete_form) }}
+            </div>
+        </article>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,61 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}
+    Albums
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Albums</h1>
+
+        {% include 'includes/flash.html.twig' %}
+
+        <table class="table is-fullwidth">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Titre</th>
+                <th>Artiste</th>
+                <th>Label</th>
+                <th>Sortie</th>
+                <th>
+                    <a href="{{ path('admin_record_add') }}" class="button is-info is-small">
+                        Nouvel album
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in record_list %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.title }}</td>
+                    <td>
+                        <a href="{{ path('admin_artist_edit', {id: record.artist.id}) }}">
+                            {{ record.artist.name }}
+                        </a>
+                    </td>
+                    <td>
+                        {% if record.label is not null %}
+{#                            <a href="{{ path('admin_label_edit', {id: record.label.id}) }}">#}
+{#                                {{ record.label.name }}#}
+{#                            </a>#}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="buttons are-small">
+                            <a href="{{ path('admin_record_edit', {id: record.id}) }}" class="button is-info">
+                                <span class="icon"><i class="fas fa-edit"></i></span>
+                            </a>
+                            <a href="{{ path('admin_record_delete', {id: record.id}) }}" class="button is-danger">
+                                <span class="icon"><i class="fas fa-times"></i></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

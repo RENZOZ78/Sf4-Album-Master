@@ -1,0 +1,30 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">{{ title }}</h1>
+
+        {% include 'includes/flash.html.twig' %}
+
+        {{ form_start(artist_form) }}
+
+        {{ form_row(artist_form.name, {
+            label: 'Nom:'
+        }) }}
+
+        {{ form_row(artist_form.description, {
+            label: 'Description:'
+        }) }}
+
+        <button type="submit" class="button is-success is-fullwidth">
+            Enregistrer
+        </button>
+
+        {{ form_end(artist_form) }}
+    </div>
+{% endblock %}
+

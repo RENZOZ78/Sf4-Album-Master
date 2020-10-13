@@ -1,0 +1,42 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">{{ title }}</h1>
+
+        {% include 'includes/flash.html.twig' %}
+
+        {{ form_start(record_form) }}
+
+        {{ form_row(record_form.title, {
+            label: 'Titre:'
+        }) }}
+
+        {{ form_row(record_form.description, {
+            label: 'Description:'
+        }) }}
+
+        {{ form_row(record_form.releasedAt, {
+            label: 'Date de sortie:'
+        }) }}
+
+        {{ form_row(record_form.artist, {
+            label: 'Artiste:'
+        }) }}
+
+        {{ form_row(record_form.label, {
+            label: 'Label:'
+        }) }}
+
+        <button type="submit" class="button is-success is-fullwidth">
+            Enregistrer
+        </button>
+
+        {{ form_end(record_form) }}
+    </div>
+{% endblock %}
+

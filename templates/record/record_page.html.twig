@@ -1,0 +1,121 @@
+{% extends "_template.html.twig" %}
+
+{% block title %}
+    Album: {{ record.title }}
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+
+        {% include 'includes/flash.html.twig' %}
+        
+        <div class="columns">
+            <div class="column is-two-fifth">
+                <figure class="image is-1by1">
+                    <img src="https://loremflickr.com/1024/1024/album,music/all?lock={{ record.id }}">
+                </figure>
+            </div>
+
+            <div class="column">
+                <h1 class="title has-text-primary">
+                    {% if record.averageNote is not null %}
+                        <span class="tag is-primary">
+                                {{ record.averageNote|number_format(2, '.', ' ') }}
+                                /10
+                            </span>
+                    {% endif %}
+                    {{ record.title }}
+                </h1>
+                <h2 class="subtitle">
+                    Artiste:
+                    <a href="{{ path('artist_page', {id: record.artist.id}) }}">
+                        {{ record.artist.name }}
+                    </a>
+                </h2>
+
+                <p class="content">
+                    {{ record.description }}
+                </p>
+
+                <hr>
+                <h6 class="is-size-7">
+                    <span class="icon has-text-info"><i class="fas fa-info-circle"></i></span>
+                    <span>Sorti le {{ record.releasedAt|date('d/m/Y') }}</span>
+                </h6>
+
+                {% if note_form is not null %}
+                    <hr>
+                    {{ form_start(note_form) }}
+
+                    {{ form_row(note_form.value, {
+                        label: "Note:",
+                    }) }}
+
+                    {{ form_row(note_form.comment, {
+                        label: "Commentaire:"
+                    }) }}
+
+                    <button type="submit" class="button is-primary is-fullwidth">
+                        Publier
+                    </button>
+
+                    {{ form_end(note_form) }}
+                {% else %}
+                    <div class="section">
+                        <article class="message is-info">
+                            <div class="message-header">
+                                <p>Noter</p>
+                            </div>
+                            <div class="message-body">
+                                Connectez-vous pour pouvoir noter cet album !
+                            </div>
+                            <div class="buttons is-centered">
+                                <a href="{{ path('app_login') }}" class="button is-info">
+                                    Connexion
+                                </a>
+                                <a href="{{ path('app_register') }}" class="button is-info">
+                                    Inscription
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <h2 class="title has-text-primary">
+            Notes: {{ record.notes|length }}
+        </h2>
+
+        {% for note in record.notes %}
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <div class="tags has-addons">
+                            <span class="tag">{{ note.value }}</span>
+                            <span class="tag is-primary">/10</span>
+                        </div>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{ note.author.pseudo }}</strong>
+                                <small>le {{ note.createdAt|date('d/m/Y \à H:i') }}</small>
+                                <br>
+                                {{ note.comment }}
+                            </p>
+                        </div>
+                    </div>
+                    {% if is_granted("NOTE_DELETE", note) %}
+                        <div class="media-right">
+                            <a class="tag is-danger" href="{{ path('note_delete', {id: note.id}) }}">
+                                Supprimer
+                                <span class="delete"></span>
+                            </a>
+                        </div>
+                    {% endif %}
+                </article>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

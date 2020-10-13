@@ -1,0 +1,46 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}
+    Labels
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Labels</h1>
+
+        {% include 'includes/flash.html.twig' %}
+
+        <table class="table is-fullwidth">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>
+                    <a href="{{ path('admin_label_add') }}" class="button is-info is-small">
+                        Nouveau label
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for label in label_list %}
+                <tr>
+                    <td>{{ label.id }}</td>
+                    <td>{{ label.name }}</td>
+                    <td>
+                        <div class="buttons are-small">
+                            <a href="{{ path('admin_label_edit', {id: label.id}) }}" class="button is-info">
+                                <span class="icon"><i class="fas fa-edit"></i></span>
+                            </a>
+                            <a href="{{ path('admin_label_delete', {id: label.id}) }}" class="button is-danger">
+                                <span class="icon"><i class="fas fa-times"></i></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
